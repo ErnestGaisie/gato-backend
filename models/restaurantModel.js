@@ -45,6 +45,46 @@ const tablesSchema = mongoose.Schema({
   },
 });
 
+const roomsSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  chairs: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
+
+const menuSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  chairs: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+});
+
 const restaurantSchema = mongoose.Schema(
   {
     user: {
@@ -90,6 +130,8 @@ const restaurantSchema = mongoose.Schema(
       default: 0,
     },
   tables: [tablesSchema],
+  rooms: [roomsSchema],
+  menu: [menuSchema],
   },
   {
     timestamps: true,
