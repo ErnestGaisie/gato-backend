@@ -14,7 +14,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       status: "SUCCESS",
-      message: "Client Account Sign Up Requested Successfully",
+      message: "Client Account Sign In Requested Successfully",
       user: {
         _id: user._id,
         name: user.name,
@@ -41,8 +41,11 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists ");
+    res.status(401).json({
+      status: "FAILED",
+      message: "User already exists",
+      user: "",
+    });
   }
 
   const user = await User.create({
@@ -53,15 +56,22 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      status: "SUCCESS",
+      message: "Client Account Sign Up Requested Successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id),
+      },
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid user data");
+    res.status(401).json({
+      status: "FAILED",
+      message: "Invalid email or password",
+      user: "",
+    });
   }
 });
 
