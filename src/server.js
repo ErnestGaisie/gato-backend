@@ -6,6 +6,7 @@ import userRoutes from "../routes/userRoutes.js"
 
 //routes
 import restaurantRoutes from "../routes/restaurantRoutes.js"
+import bookingRoutes from "../routes/bookingRoutes.js"
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
   });
   app.use("/api/users", userRoutes);
   app.use("/api/restaurants", restaurantRoutes);
+  app.use("/api/bookings", bookingRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`.cyan.underline)
