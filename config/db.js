@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
+      // `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@gato.ipvpf.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
       `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@gato.ipvpf.mongodb.net/${process.env.MONGO_DB_NAME}?retryWrites=true&w=majority`,
       {
         useUnifiedTopology: true,

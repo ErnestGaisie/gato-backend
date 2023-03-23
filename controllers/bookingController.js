@@ -22,7 +22,7 @@ const addBookingItems = asyncHandler(async (req, res) => {
     const createdBooking = await booking.save();
 
     if (createdBooking) {
-        res.status(201).json({
+        res.status(200).json({
             status: "SUCCESS",
             message: "Booking created successfully",
             booking: createdBooking,
