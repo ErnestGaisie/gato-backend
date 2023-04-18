@@ -36,7 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
 //@route POST /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, phoneNumber } = req.body;
+  const { firstName, lastName, email, password, phoneNumber } = req.body;
 
   const userExists = await User.findOne({ email: email });
 
@@ -49,7 +49,8 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
-    name: name,
+    firstName: firstName,
+    lastName: lastName,
     email: email,
     phoneNumber: phoneNumber,
     password: password,
@@ -61,7 +62,9 @@ const registerUser = asyncHandler(async (req, res) => {
       message: "Client Account Sign Up Requested Successfully",
       user: {
         _id: user._id,
-        name: user.name,
+        fullName: user.fullName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),

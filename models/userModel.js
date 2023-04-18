@@ -3,7 +3,11 @@ import bcrypyt from "bcryptjs";
 
 const userSchema = mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -13,10 +17,10 @@ const userSchema = mongoose.Schema(
       unique: true,
     },
     phoneNumber: {
-        type: String,
-        required: false,
-        unique: true,
-      },
+      type: String,
+      required: false,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
@@ -29,8 +33,18 @@ const userSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
+
+//Create virtual field for user's full name
+
+userSchema.virtual("fullName").get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypyt.compare(enteredPassword, this.password);
