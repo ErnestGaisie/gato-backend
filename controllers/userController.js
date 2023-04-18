@@ -13,7 +13,7 @@ const authUser = asyncHandler(async (req, res) => {
   // match password is a function in the usermodel to decrypt the password to hash format and compare
   if (user && (await user.matchPassword(password))) {
     res.json({
-      status: "SUCCESS",
+      status: "00",
       message: "Client Account Sign In Requested Successfully",
       user: {
         _id: user._id,
@@ -25,7 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401).json({
-      status: "FAILED",
+      status: "99",
       message: "Invalid email or password",
       user: "",
     });
@@ -36,13 +36,13 @@ const authUser = asyncHandler(async (req, res) => {
 //@route POST /api/users
 //@access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password , phoneNumber} = req.body;
+  const { name, email, password, phoneNumber } = req.body;
 
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
     res.status(401).json({
-      status: "FAILED",
+      status: "99",
       message: "User already exists",
       user: "",
     });
@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      status: "SUCCESS",
+      status: "00",
       message: "Client Account Sign Up Requested Successfully",
       user: {
         _id: user._id,
@@ -69,7 +69,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401).json({
-      status: "FAILED",
+      status: "99",
       message: "Invalid email or password",
       user: "",
     });
